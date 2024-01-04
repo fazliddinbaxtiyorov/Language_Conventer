@@ -42,3 +42,37 @@ class LanguageCreateView(CreateAPIView):
         else:
             return Response({'error': 'Invalid request'})
 
+
+class LanguageFileAddView(CreateAPIView):
+    queryset = LanguageFileModels
+    serializer_class = LanguageFileSerializers
+
+    def post(self, request):
+        file = request.FILES['file']
+        pattern = request.data['pattern']
+
+        if file.name.endswith('.txt'):
+            content = file.read().decode('utf-8')
+            if pattern == 'cyrillic':
+                result = ''
+                for i in content.replace('Sh', 'Ш').replace('Ch', 'Ч').replace('sh', 'ш').replace('ch', 'ч'):
+                    if i in CYRILLIC_TO_LATIN:
+                        result += CYRILLIC_TO_LATIN[i]
+                    else:
+                        result += i
+            elif pattern == 'latin':
+                result = ''
+                for i in content.replace('Ш', 'Sh').replace('Ч', 'Ch').replace('ш', 'sh').replace('ч', 'ch'):
+                    if i in LATIN_TO_CYRILLIC:
+                        result += LATIN_TO_CYRILLIC[i]
+                    else:
+                        result += i
+            else:
+                return Response({'error': 'Invalid pattern'})
+
+            with open('result.txt', 'w', encoding='utf-8') as files:
+                files.write(result)
+
+            return Response({'result': 'File sent successfully, File Name: result.txt'})
+        else:
+            return Response({'error': 'Invalid File Format Not .txt File'})
