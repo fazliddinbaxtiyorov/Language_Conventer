@@ -70,10 +70,7 @@ class LanguageFileAddView(CreateAPIView):
             else:
                 return Response({'error': 'Invalid pattern'})
 
-            with open('result.txt', 'w', encoding='utf-8') as files:
-                files.write(result)
-
-            return Response({'result': 'File sent successfully, File Name: result.txt'})
+            return Response({'result': result})
         else:
             return Response({'error': 'Invalid File Format Not .txt File'})
 
