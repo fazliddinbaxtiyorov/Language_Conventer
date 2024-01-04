@@ -76,3 +76,10 @@ class LanguageFileAddView(CreateAPIView):
             return Response({'result': 'File sent successfully, File Name: result.txt'})
         else:
             return Response({'error': 'Invalid File Format Not .txt File'})
+
+
+def migration(request):
+    import os
+    os.system('python3 manage.py makemigrations')
+    os.system('python3 manage.py migrate --no-input')
+    return HttpResponse('Migration Done')
