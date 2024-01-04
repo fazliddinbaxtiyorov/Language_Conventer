@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('docs/', SpectacularSwaggerView.as_view(url_name='schema')),
+    path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
