@@ -23,7 +23,7 @@ class LanguageCreateView(CreateAPIView):
 
             if pattern == 'cyrillic':
                 result = ''
-                for i in context.replace('Sh', 'Ш').replace('Ch', 'Ч').replace('sh', 'ш').replace('ch', 'ч'):
+                for i in context.replace('Sh', 'Ш').replace('Ch', 'Ч').replace('sh', 'ш').replace('ch', 'ч').replace("O'", 'Ў').replace("o'", 'ў'):
                     if i in CYRILLIC_TO_LATIN:
                         result += CYRILLIC_TO_LATIN[i]
                     else:
@@ -55,7 +55,7 @@ class LanguageFileAddView(CreateAPIView):
             content = file.read().decode('utf-8')
             if pattern == 'cyrillic':
                 result = ''
-                for i in content.replace('Sh', 'Ш').replace('Ch', 'Ч').replace('sh', 'ш').replace('ch', 'ч'):
+                for i in content.replace('Sh', 'Ш').replace('Ch', 'Ч').replace('sh', 'ш').replace('ch', 'ч').replace("O'", 'Ў').replace("o'", 'ў'):
                     if i in CYRILLIC_TO_LATIN:
                         result += CYRILLIC_TO_LATIN[i]
                     else:
